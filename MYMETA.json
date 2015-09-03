@@ -1,0 +1,68 @@
+{
+   "abstract" : "Object approach at reading explain analyze output",
+   "author" : [
+      "scott kahler <scott.kahler@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.133380",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "GP-Explain",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::Deep" : "0",
+            "Test::Exception" : "0",
+            "Test::More" : "0",
+            "autodie" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.38"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Clone" : "0",
+            "Digest::SHA1" : "0",
+            "HOP::Lexer" : "0",
+            "perl" : "5.010"
+         }
+      }
+   },
+   "provides" : {
+      "GP::Explain" : {
+         "file" : "lib/GP/Explain.pm",
+         "version" : "0.71"
+      },
+      "GP::Explain::From" : {
+         "file" : "lib/GP/Explain/From.pm",
+         "version" : "0.71"
+      },
+      "GP::Explain::FromText" : {
+         "file" : "lib/GP/Explain/FromText.pm",
+         "version" : "0.71"
+      },
+      "GP::Explain::Node" : {
+         "file" : "lib/GP/Explain/Node.pm",
+         "version" : "0.71"
+      },
+      "GP::Explain::StringAnonymizer" : {
+         "file" : "lib/GP/Explain/StringAnonymizer.pm",
+         "version" : "0.71"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.71"
+}

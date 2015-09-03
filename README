@@ -1,0 +1,50 @@
+GP-Explain
+
+This module provides general work for parsing Greenplum explain and explain analyze outputs.
+
+Given explain is parsed into set of nodes, which are connected using
+
+->subplans()
+->initplans()
+->sub_nodes()
+
+This module will be used for web-based service for analyzing explain analyze plans, but can be used for any other purpose as well.
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+	perl Build.PL
+	./Build
+	./Build test
+	./Build install
+
+SUPPORT AND DOCUMENTATION
+
+After installing, you can find documentation for this module with the
+perldoc command.
+
+    perldoc GP::Explain
+
+You can also look for information at:
+
+    RT, CPAN's request tracker
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=GP-Explain
+
+    AnnoCPAN, Annotated CPAN documentation
+        http://annocpan.org/dist/GP-Explain
+
+    CPAN Ratings
+        http://cpanratings.perl.org/d/GP-Explain
+
+    Search CPAN
+        http://search.cpan.org/dist/GP-Explain
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2015 scott kahler
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+

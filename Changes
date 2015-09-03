@@ -1,0 +1,13 @@
+Revision history for GP-Explain
+
+
+0.03    2015/09/02
+        - Moved a large number of filter and other information out of the extra_info
+        - Removed a bunch of the tests until I'm ready to start adding them back in. Doing Result Drive Development instead of TDD
+        - Going to push this version out to Github
+
+0.02    2015/09/01
+        - Regex additions for various GPDB Explain syntax
+
+0.01    2015/08/29
+        - Pulled the whole thing from Pg-Explain and start hacking for GP
