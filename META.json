@@ -32,9 +32,6 @@
             "Clone" : "0",
             "Digest::SHA1" : "0",
             "HOP::Lexer" : "0",
-            "JSON" : "0",
-            "XML::Simple" : "0",
-            "YAML" : "0",
             "perl" : "5.010"
          }
       }
@@ -42,23 +39,23 @@
    "provides" : {
       "GP::Explain" : {
          "file" : "lib/GP/Explain.pm",
-         "version" : "0.71"
+         "version" : "0.03"
       },
       "GP::Explain::From" : {
          "file" : "lib/GP/Explain/From.pm",
-         "version" : "0.71"
+         "version" : "0.03"
       },
       "GP::Explain::FromText" : {
          "file" : "lib/GP/Explain/FromText.pm",
-         "version" : "0.71"
+         "version" : "0.03"
       },
       "GP::Explain::Node" : {
          "file" : "lib/GP/Explain/Node.pm",
-         "version" : "0.71"
+         "version" : "0.03"
       },
       "GP::Explain::StringAnonymizer" : {
          "file" : "lib/GP/Explain/StringAnonymizer.pm",
-         "version" : "0.71"
+         "version" : "0.03"
       }
    },
    "release_status" : "stable",
@@ -67,5 +64,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.71"
+   "version" : "0.03"
 }

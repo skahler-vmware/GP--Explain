@@ -12,11 +12,11 @@ GP::Explain::Node - Class representing single node from query plan
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -206,8 +206,11 @@ sub hash_condition       { my $self = shift; $self->{'hash_condition' }         
 sub index_condition       { my $self = shift; $self->{'index_condition' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'index_condition' }; }
 sub hash_key       { my $self = shift; $self->{'hash_key' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'hash_key' }; }
 sub merge_key       { my $self = shift; $self->{'merge_key' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'merge_key' }; }
+sub merge_cond       { my $self = shift; $self->{'merge_cond' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'merge_cond' }; }
 sub filter       { my $self = shift; $self->{'filter' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'filter' }; }
 sub group_by       { my $self = shift; $self->{'group_by' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'group_by' }; }
+sub order_by       { my $self = shift; $self->{'order_by' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'order_by' }; }
+sub partition_by       { my $self = shift; $self->{'partition_by' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'partition_by' }; }
 sub sort_key_limit       { my $self = shift; $self->{'sort_key_limit' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'sort_key_limit' }; }
 sub sort_key_distinct       { my $self = shift; $self->{'sort_key_distinct' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'sort_key_distinct' }; }
 sub sort_key       { my $self = shift; $self->{'sort_key' }         = $_[ 0 ] if 0 < scalar @_; return $self->{ 'sort_key' }; }
@@ -253,7 +256,7 @@ sub new {
     croak( 'estimated_total_cost has to be passed to constructor of explain node' )   unless defined $self->estimated_total_cost;
     croak( 'type has to be passed to constructor of explain node' )                   unless defined $self->type;
 
-    if ( $self->type =~ m{ \A ( Seq \s Scan | Bitmap \s+ Heap \s+ Scan | Append-only \s+ Scan | Foreign \s+ Scan | Update | Insert | Delete ) \s on \s (\S+) (?: \s+ (\S+) ) ? \z }xms ) {
+    if ( $self->type =~ m{ \A ( Seq \s Scan | Bitmap \s+ Heap \s+ Scan | Append-only \s+ Scan | Append-only \s+ Columnar \s+ Scan | Foreign \s+ Scan | Table \s+ Scan | Update | Insert | Delete ) \s on \s (\S+) (?: \s+ (\S+) ) ? \z }xms ) {
         $self->type( $1 );
         $self->table_name( $2 );
         $self->table_alias( $3 ) if defined $3;
@@ -546,8 +549,11 @@ sub get_struct {
     $reply->{ 'index_condition' }            = $self->index_condition              if defined $self->index_condition;
     $reply->{ 'hash_key' }            = $self->hash_key             if defined $self->hash_key;
     $reply->{ 'merge_key' }            = $self->merge_key             if defined $self->merge_key;
+    $reply->{ 'merge_cond' }            = $self->merge_cond             if defined $self->merge_cond;
     $reply->{ 'filter' }            = $self->filter             if defined $self->filter;
     $reply->{ 'group_by' }            = $self->group_by             if defined $self->group_by;
+    $reply->{ 'partition_by' }            = $self->partition_by             if defined $self->partition_by;
+    $reply->{ 'order_by' }            = $self->order_by             if defined $self->order_by;
     $reply->{ 'sort_key_limit' }            = $self->sort_key_limit             if defined $self->sort_key_limit;
     $reply->{ 'sort_key_distinct' }            = $self->sort_key_distinct             if defined $self->sort_key_distinct;
     $reply->{ 'sort_key' }            = $self->sort_key             if defined $self->sort_key;

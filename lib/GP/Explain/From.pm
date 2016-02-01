@@ -9,11 +9,11 @@ GP::Explain::From - Base class for parsers of non-text explain formats.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -90,7 +90,7 @@ sub make_node_from {
         $new_node->never_executed( 1 );
     }
 
-    if ( $struct->{ 'Node Type' } =~ m{\A(?:Seq Scan|Bitmap Heap Scan|Append-only Scan)$} ) {
+    if ( $struct->{ 'Node Type' } =~ m{\A(?:Seq Scan|Bitmap Heap Scan|Append-only Scan|Append-only Columnar Scan|Table Scan)$} ) {
         $new_node->scan_on(
             {
                 'table_name'  => $struct->{ 'Relation Name' },

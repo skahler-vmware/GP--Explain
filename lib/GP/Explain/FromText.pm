@@ -9,11 +9,11 @@ GP::Explain::FromText - Parser for text based explains
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -157,6 +157,7 @@ sub parse_source {
 
             next LINE;
         }
+       #"Rows out:  0 rows (seg0) with 21 ms to end, start offset by 24 ms."
         elsif ( $line =~ m{
                   \A
                   (\s*) Rows \s out: \s*
@@ -166,6 +167,8 @@ sub parse_source {
                     Avg \s (?<rows_out_avg_rows>\S+) \s rows \s x \s (?<rows_out_workers>\S+) \s workers\.
                    |
                     (?<rows_out_count>\S+) \s rows \s at \s destination
+                   |
+                    (?<rows_out_count>\S+) \s rows \s \( (?<rows_out_max_rows_segment>\S+?) \) 
                    |
                     (?<rows_out_count>\S+) \s rows
                   )
@@ -264,6 +267,30 @@ sub parse_source {
             next LINE;
         }
         elsif ( $line =~ m{ \A (\s*) Merge \s Key: \s* (?<merge_key>\S .* \S ) \s* \z }xms) {
+            my ( $prefix ) = ( $1 );
+            my $maximal_depth = ( sort { $b <=> $a } grep { $_ < length $prefix } keys %element_at_depth )[ 0 ];
+            next LINE unless defined $maximal_depth;
+            my $previous_element = $element_at_depth{ $maximal_depth };
+            $previous_element->{ 'node' }->add_additional_info( %+ );
+            next LINE;
+        }
+        elsif ( $line =~ m{ \A (\s*) Merge \s Cond: \s* (?<merge_cond>\S .* \S ) \s* \z }xms) {
+            my ( $prefix ) = ( $1 );
+            my $maximal_depth = ( sort { $b <=> $a } grep { $_ < length $prefix } keys %element_at_depth )[ 0 ];
+            next LINE unless defined $maximal_depth;
+            my $previous_element = $element_at_depth{ $maximal_depth };
+            $previous_element->{ 'node' }->add_additional_info( %+ );
+            next LINE;
+        }
+        elsif ( $line =~ m{ \A (\s*) Partition \s By: \s* (?<partition_by>\S .* \S ) \s* \z }xms) {
+            my ( $prefix ) = ( $1 );
+            my $maximal_depth = ( sort { $b <=> $a } grep { $_ < length $prefix } keys %element_at_depth )[ 0 ];
+            next LINE unless defined $maximal_depth;
+            my $previous_element = $element_at_depth{ $maximal_depth };
+            $previous_element->{ 'node' }->add_additional_info( %+ );
+            next LINE;
+        }
+        elsif ( $line =~ m{ \A (\s*) Order \s By: \s* (?<order_by>\S .* \S ) \s* \z }xms) {
             my ( $prefix ) = ( $1 );
             my $maximal_depth = ( sort { $b <=> $a } grep { $_ < length $prefix } keys %element_at_depth )[ 0 ];
             next LINE unless defined $maximal_depth;
